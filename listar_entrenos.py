@@ -1,6 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 api_key = os.getenv("HEVY_API_KEY")
@@ -13,5 +14,12 @@ respuesta = requests.get(
 
 datos = respuesta.json()
 
-for entreno in datos["workouts"]:
-    print(entreno["title"], "-", entreno["start_time"])
+primero = datos["workouts"][0]
+
+print()
+print(primero["title"])
+
+for ejercicio in primero["exercises"]:
+    print(ejercicio["title"])
+    for serie in ejercicio["sets"]:
+        print(f"   {serie['weight_kg']} kg x {serie['reps']} reps")
